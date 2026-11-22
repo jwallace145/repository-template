@@ -31,4 +31,6 @@ The standard every one of my projects starts from: how its GitHub organization i
 
 The two conventions documents, this README and `CHANGELOG.md` belong to this repository only; a new repository writes its own README and lets Release Please create its changelog.
 
+What changed in each version of the conventions is in [CHANGELOG.md](CHANGELOG.md), which Release Please writes from the commits; pin a project to a [release](https://github.com/jwallace145/repository-template/releases) when it needs to say which version of the conventions it follows.
+
 Contribution rules are in [CONTRIBUTING.md](CONTRIBUTING.md); the rules for coding agents are in [AGENTS.md](AGENTS.md).
