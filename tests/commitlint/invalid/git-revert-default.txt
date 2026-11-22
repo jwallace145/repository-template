@@ -1,0 +1,3 @@
+Revert "feat(templates): add the task form"
+
+This reverts commit 1234567890abcdef1234567890abcdef12345678.

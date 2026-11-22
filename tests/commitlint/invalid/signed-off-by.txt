@@ -1,0 +1,3 @@
+fix(templates): mark the reproduction field required
+
+Signed-off-by: Someone <someone@example.com>

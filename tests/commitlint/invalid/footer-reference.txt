@@ -1,0 +1,3 @@
+fix(templates): mark the reproduction field required
+
+Closes #12

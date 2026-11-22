@@ -1,0 +1,25 @@
+name: Task
+description: Work that changes no behavior, such as a refactor, docs, CI, tests or upkeep.
+labels: [task]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: The work to do.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: Why it is worth doing now.
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: How we will know it is finished. Optional.
+      placeholder: |
+        - [ ]

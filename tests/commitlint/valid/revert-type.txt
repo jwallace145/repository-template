@@ -1,0 +1,1 @@
+revert(templates): restore the task form

@@ -1,0 +1,1 @@
+feature(templates): add the bug form

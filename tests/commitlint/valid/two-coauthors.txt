@@ -1,0 +1,4 @@
+docs(conventions): explain repository scopes
+
+Co-authored-by: Someone <someone@example.com>
+Co-authored-by: Other Person <other@example.com>

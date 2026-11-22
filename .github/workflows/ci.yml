@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  pull_request:
+    # `edited` re-runs the title check when the title changes.
+    types: [opened, synchronize, reopened, edited]
+
+# One run per pull request; a new push cancels the previous run.
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  commitlint:
+    name: commitlint
+    runs-on: ubuntu-latest
+    # Dependabot's commits carry a release-notes body, which the one-line rule
+    # rejects. Its pull requests are squash merged under their title, which
+    # pr-title checks, so what lands on main still conforms. A skipped job
+    # satisfies the required status check.
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Every commit in the range is linted, so a rebase merge lands only
+          # one-line Conventional Commits on main.
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Lint every commit in base..head
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npx commitlint --from "$BASE_SHA" --to "$HEAD_SHA" --verbose
+
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # A squash merge uses the title as the commit message, so the title goes
+      # through the same config as a commit: type, scope, case and length.
+      - name: Lint the title as a commit header
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$PR_TITLE" | npx commitlint --verbose
+
+  commitlint-rules:
+    name: commitlint-rules
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Unit test the local rules and the scopes, and check the fixture messages
+        run: npm test

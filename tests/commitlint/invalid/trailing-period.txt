@@ -1,0 +1,1 @@
+fix(templates): tidy the bug form.

@@ -1,0 +1,35 @@
+name: Bug
+description: Something is broken or behaves differently from its documentation.
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: The smallest steps, command or input that shows it.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The release, commit or environment where it happens.
+      placeholder: v1.2.3
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Logs and context
+      description: Error output, screenshots, or anything else that helps. Optional.
