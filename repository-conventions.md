@@ -96,6 +96,7 @@ rules: {
 
 - The title is a valid commit header, scope included. It becomes the squash commit on `main`, so it's the line people read in `git log`.
 - One template, `.github/pull_request_template.md`, with Summary, Why, Changes and Verification sections and a four-item checklist. Fill in every section; write "n/a" rather than deleting one. For a fix, Why names the bug, its root cause and how to reproduce it.
+- A repository may add **one** section of its own, between Verification and Checklist, when its CI or review depends on a measurement no other repository has: braveheart's **Bench and SPRT** (the Bench job reads its last `Bench:` line), the trainer's **Nets**, self-play's **Data**. It is still filled in on every pull request ("n/a" when it doesn't apply), its CONTRIBUTING.md names it, and the four standard sections and the checklist stay as they are. A second extra section, or one that only restates Verification, belongs in Verification instead.
 - Link the issue with `Closes #<n>` in the description, never in a commit.
 - One logical change per pull request: if the title can't describe it in one line, split it.
 
