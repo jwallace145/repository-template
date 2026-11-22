@@ -14,6 +14,7 @@ How the GitHub organization around a repository is set up (its release bot, orga
 - Breaking changes are marked with `!` before the colon: `feat(api)!: drop the v1 routes`.
 - The only thing allowed after the header is a blank line followed by `Co-authored-by: Name <email>` trailers, which credit a pairing human or an AI model. The key matches in any letter case, so Claude Code's `Co-Authored-By:` passes. Nothing else: no body, no `Closes #12`, no `Signed-off-by`.
 - Merge commits and git's default `Revert "..."` messages are rejected. Write a revert as `revert(scope): subject`.
+- The one exception to the lowercase subject is Dependabot, which always writes `chore(deps): Bump ...`; the local `subject-lowercase` rule allows exactly that header and nothing else.
 
 ### Types
 
@@ -78,11 +79,13 @@ rules: {
   "scope-enum": [2, "always", Object.keys(SCOPES)],
   "scope-empty": [2, "never"],
   "single-scope": [2, "always"],          // local rule: one scope, not a list
+  "subject-case": [0],
+  "subject-lowercase": [2, "always"],     // local rule: lowercase, except Dependabot's `chore(deps): Bump`
   "only-coauthor-trailers": [2, "always"], // local rule: nothing after the header but trailers
 }
 ```
 
-- The two local rules are in `tools/commitlint/` with unit tests. The built-in body and footer rules can't express "only co-author trailers" reliably.
+- The three local rules are in `tools/commitlint/` with unit tests. The built-in body and footer rules can't express "only co-author trailers" reliably.
 - `npm test` runs the unit tests, checks that `CONTRIBUTING.md` lists exactly the configured scopes, and runs every fixture in `tests/commitlint/valid` (must pass) and `tests/commitlint/invalid` (must fail).
 - **Local:** a `commit-msg` hook through `pre-commit`, documented in `CONTRIBUTING.md`. It's a convenience only.
 - **CI is authoritative:** it lints every commit in the pull request range (base..head), and lints the pull request title through the same config, because squash merges use the title as the commit message.

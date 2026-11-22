@@ -18,7 +18,7 @@ The standard every one of my projects starts from: how its GitHub organization i
 | Path | What it is |
 | --- | --- |
 | `commitlint.config.mjs` | The shared types and this repository's `SCOPES`; replace the scopes with the new repository's own |
-| `tools/commitlint/` | The local rules `only-coauthor-trailers` and `single-scope`, with unit tests, and the scopes drift test |
+| `tools/commitlint/` | The local rules `only-coauthor-trailers`, `single-scope` and `subject-lowercase`, with unit tests, and the scopes drift test |
 | `tests/commitlint/`, `scripts/test-commitlint.sh` | Fixture messages that must pass or fail, and their runner |
 | `package.json`, `.pre-commit-config.yaml` | commitlint and the local `commit-msg` hook |
 | `.github/workflows/ci.yml` | The `commitlint`, `pr-title` and `commitlint-rules` jobs |

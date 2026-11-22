@@ -1,5 +1,6 @@
 import onlyCoauthorTrailers from "./tools/commitlint/only-coauthor-trailers.mjs";
 import singleScope from "./tools/commitlint/single-scope.mjs";
+import subjectLowercase from "./tools/commitlint/subject-lowercase.mjs";
 
 // The commit types. One closed set, identical in every repository: copy it
 // unchanged and never add to it.
@@ -42,6 +43,7 @@ export default {
       rules: {
         "only-coauthor-trailers": onlyCoauthorTrailers,
         "single-scope": singleScope,
+        "subject-lowercase": subjectLowercase,
       },
     },
   ],
@@ -54,6 +56,9 @@ export default {
     "scope-enum": [2, "always", Object.keys(SCOPES)],
     "scope-empty": [2, "never"],
     "single-scope": [2, "always"],
+    // Lowercase subjects, except Dependabot's fixed `chore(deps): Bump ...`.
+    "subject-case": [0],
+    "subject-lowercase": [2, "always"],
     "only-coauthor-trailers": [2, "always"],
     // The local rule above is the authority on everything after the header;
     // the built-in body and footer rules would only produce duplicates.

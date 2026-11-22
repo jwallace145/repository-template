@@ -35,7 +35,7 @@ type(scope): subject
 - Breaking changes are marked with `!`, for example `feat(commitlint)!: require a scope on every commit`.
 - The **only** content allowed after the header is a blank line followed by `Co-authored-by: Name <email>` trailers (any letter case). No body text; details belong in the pull request description.
 
-commitlint enforces this: `@commitlint/config-conventional` plus the local rules `single-scope` and `only-coauthor-trailers` in `tools/commitlint/`. The fixtures in `tests/commitlint/` show accepted and rejected messages; CI checks them.
+commitlint enforces this: `@commitlint/config-conventional` plus the local rules `single-scope`, `subject-lowercase` (which lets Dependabot's fixed `chore(deps): Bump ...` through) and `only-coauthor-trailers` in `tools/commitlint/`. The fixtures in `tests/commitlint/` show accepted and rejected messages; CI checks them.
 
 ### Types
 
