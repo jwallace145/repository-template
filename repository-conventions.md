@@ -179,7 +179,7 @@ Rules:
 
 Merging the Release Please pull request is the human-reviewed gate for every release, whether that's a package, a module version, or an infrastructure apply. Release Please owns `CHANGELOG.md` and `version.txt`; nobody edits them by hand, and nobody creates tags by hand.
 
-- Release pull requests are authored by the organization's own GitHub App, `<org>-release-bot[bot]` (for example `jaws-platform-release-bot[bot]`), so CI runs on them. Pull requests opened with `GITHUB_TOKEN` don't trigger CI. The bot and its secrets are set up once per organization; see [organization-conventions.md](organization-conventions.md#release-bot).
+- Release pull requests are authored by the organization's own GitHub App, `<org>-releases[bot]` (for example `jwall-engineering-releases[bot]`; organizations from before this rule still use `<org>-release-bot[bot]`, such as `jaws-platform-release-bot[bot]`), so CI runs on them. Pull requests opened with `GITHUB_TOKEN` don't trigger CI. The bot and its secrets are set up once per organization; see [organization-conventions.md](organization-conventions.md#release-bot).
 - The workflow reads the **organization** secrets `RELEASE_BOT_CLIENT_ID` and `RELEASE_BOT_PRIVATE_KEY`. A repository on a personal account, which has no organization secrets, sets them as repository secrets for the personal bot.
 - Config uses a manifest (`release-please-config.json` and `.release-please-manifest.json`), `release-type: simple` unless an ecosystem type fits better, starting at `0.1.0`.
 - `pull-request-title-pattern` is `chore(release): release${component} ${version}`, so the release commit uses the `release` scope instead of Release Please's default `chore(main)`.

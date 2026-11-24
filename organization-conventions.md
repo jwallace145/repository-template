@@ -20,7 +20,7 @@ Working examples: [Braveheart-Chess](https://github.com/Braveheart-Chess) and [J
 | Main repository | `<project>`, lowercase | `braveheart`, `jaws` |
 | Other repositories | `<project>-<part>`, lowercase kebab-case | `braveheart-trainer`, `braveheart-lichess-bot` |
 | Branding repository | `<project>-branding` | `braveheart-branding`, `jaws-branding` |
-| GitHub Apps | `<org>-<purpose>` | `braveheart-chess-release-bot`, `jaws-platform-comments` |
+| GitHub Apps | Display name `<Org Name> <Purpose>`, slug `<org>-<purpose>`. Never end a name in "bot": GitHub appends `[bot]` to the login | `JWall Engineering Releases` (`jwall-engineering-releases[bot]`), `jaws-platform-comments` |
 
 Names an ecosystem fixes keep its pattern: `.github`, `homebrew-tap`, `terraform-aws-<name>`.
 
@@ -58,12 +58,13 @@ Update `profile/README.md` whenever a repository or an App is added or retired.
 
 ## Release bot
 
-**MUST:** every organization owns one release bot, a GitHub App named `<org>-release-bot`, and every repository's Release Please workflow uses it.
+**MUST:** every organization owns one release bot, a GitHub App named `<Org Name> Releases` (slug `<org>-releases`), and every repository's Release Please workflow uses it. Its commits and pull requests are authored by `<org>-releases[bot]`: the login is the slug plus the `[bot]` GitHub adds, so a name ending in "bot" would read `release-bot[bot]`.
 
 - Release pull requests opened with `GITHUB_TOKEN` don't trigger CI. A pull request opened by an App does, so release pull requests get the same checks as any other.
 - The App is owned by the organization, not by my personal account, so its reach ends at the organization's boundary and it moves with the organization.
 - **Settings:** no webhook; repository permissions Contents read and write, and Pull requests read and write (Metadata read is implied); installed on **all repositories**, so every new repository gets it without a step.
 - **Logo:** the organization avatar from the branding repository.
+- **Older organizations.** Braveheart-Chess, Jaws-Platform and the personal account still use `<org>-release-bot` Apps from before this rule. Renaming an App can change its slug and so its bot login, so each rename is its own change, together with every document that names the old login. Rulesets refer to Apps by ID and are unaffected.
 - Other Apps follow the same pattern: one App per purpose, owned by the organization, listed in the profile. For example, `jaws-platform-comments` posts the Jaws plan and preview comments and is installed in every organization that uses Jaws sites.
 
 ## Organization secrets and variables
@@ -77,7 +78,7 @@ Update `profile/README.md` whenever a repository or an App is added or retired.
 
 ```sh
 gh secret set RELEASE_BOT_CLIENT_ID   --org <Org-Name> --visibility all --body "<client-id>"
-gh secret set RELEASE_BOT_PRIVATE_KEY --org <Org-Name> --visibility all < <org>-release-bot.private-key.pem
+gh secret set RELEASE_BOT_PRIVATE_KEY --org <Org-Name> --visibility all < <org>-releases.private-key.pem
 ```
 
 - The names are the same in every organization, so every workflow is identical across organizations; only the App behind the secrets differs.
@@ -108,7 +109,7 @@ Do the steps in this order: the bot needs the organization, the secrets need the
 Owner (these need the GitHub web UI or owner credentials):
 
 - [ ] Create the organization `<Org-Name>` on the free plan, with `jwallace145` as owner, and apply the [organization settings](#organization-settings).
-- [ ] Create the GitHub App `<org>-release-bot`, owned by the organization, with the [release bot settings](#release-bot). Install it on all repositories and generate a private key.
+- [ ] Create the GitHub App `<Org Name> Releases` (slug `<org>-releases`), owned by the organization, with the [release bot settings](#release-bot). Install it on all repositories and generate a private key.
 - [ ] Set the organization secrets `RELEASE_BOT_CLIENT_ID` and `RELEASE_BOT_PRIVATE_KEY`, with access for all repositories.
 - [ ] If any repository will use Jaws sites, install `jaws-platform-comments` on the organization.
 - [ ] Once the branding exists, set the organization picture and the App's logo to the avatar.
